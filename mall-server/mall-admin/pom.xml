@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 引用父项目 -->
+    <parent>
+        <groupId>com.yking</groupId>
+        <artifactId>spring-ai-mall</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mall-admin</artifactId>
+    <name>mall-admin</name>
+    <description>统一后端服务</description>
+
+    <dependencies>
+        <!-- 引用子模块依赖 -->
+        <dependency>
+            <groupId>com.yking</groupId>
+            <artifactId>mall-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yking</groupId>
+            <artifactId>mall-ai</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Spring Boot 打包插件：将应用打包为可执行 Fat JAR，指定启动主类 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.yking.malladmin.MallAdminApplication</mainClass>
+                    <!--
+                        固定工作目录为项目根目录（本模块的上两级）。
+                        file.upload-dir 配的是相对路径 ./uploads，工作目录不同就会解析到不同的目录，
+                        导致「上传的图在这个目录、运行的实例却读那个目录」。
+                        IDEA 的运行配置默认就是项目根，这里把命令行启动也对齐到同一处。
+                    -->
+                    <workingDirectory>${project.basedir}/../..</workingDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

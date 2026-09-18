@@ -1,0 +1,153 @@
+/**
+ * 全局基础样式
+ *
+ * 只放三类内容：基础重置、页面骨架的通用类、跨页面复用的少量排版类。
+ * 具体页面的样式一律写在各自组件的 <style scoped> 里，避免这里膨胀成公共样式垃圾桶。
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--mp-canvas);
+  color: var(--mp-ink);
+  font-family: var(--mp-font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ==================== 内容容器 ==================== */
+/* 页面内容统一约束在同一宽度内，保持整站的留白节奏一致 */
+.mp-container {
+  width: 100%;
+  max-width: var(--mp-content-width);
+  margin: 0 auto;
+  padding: 0 var(--mp-page-margin);
+}
+
+/* ==================== 排版 ==================== */
+/* 衬线标题：用于页面主标题、区块标题、商品名 */
+.mp-serif {
+  font-family: var(--mp-font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--mp-ink);
+}
+
+/* 价格：数字用无衬线半粗，货币符号缩小并降低不透明度（设计规范明确要求） */
+.mp-price {
+  font-family: var(--mp-font-sans);
+  font-weight: 600;
+  color: var(--mp-primary);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.mp-price__symbol {
+  font-size: 0.72em;
+  opacity: 0.75;
+}
+
+/* 划线原价 */
+.mp-price-original {
+  color: var(--mp-ink-muted);
+  text-decoration: line-through;
+  font-size: 0.85em;
+}
+
+/* ==================== 卡片 ==================== */
+.mp-card {
+  background: var(--mp-surface);
+  border-radius: var(--mp-radius-lg);
+  box-shadow: var(--mp-shadow-card);
+}
+
+/* ==================== 胶囊标签 ==================== */
+.mp-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 var(--mp-space-xs);
+  border-radius: var(--mp-radius-sm);
+  background: var(--mp-secondary-tint);
+  color: var(--mp-secondary-ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ==================== 主操作按钮 ==================== */
+/* 自研按钮，用于商品卡与关键 CTA；表单类交互仍用 Element Plus 组件 */
+.mp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 var(--mp-space-md);
+  border: none;
+  border-radius: var(--mp-radius);
+  background: var(--mp-primary);
+  color: #fff;
+  font-family: var(--mp-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.mp-btn:hover {
+  background: var(--mp-primary-hover);
+}
+
+.mp-btn:active {
+  transform: scale(0.98);
+}
+
+.mp-btn--outline {
+  background: var(--mp-canvas);
+  border: 1px solid var(--mp-outline);
+  color: var(--mp-ink);
+}
+
+/* 小尺寸：用于订单卡、详情页这类行内操作按钮 */
+.mp-btn--sm {
+  height: 32px;
+  padding: 0 var(--mp-space-md);
+  font-size: 13px;
+}
+
+.mp-btn--outline:hover {
+  background: var(--mp-surface-subdued);
+}
+
+.mp-btn:disabled {
+  background: var(--mp-surface-subdued);
+  color: var(--mp-ink-muted);
+  cursor: not-allowed;
+  transform: none;
+}

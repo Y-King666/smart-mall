@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 引用父项目 -->
+    <parent>
+        <groupId>com.yking</groupId>
+        <artifactId>spring-ai-mall</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mall-ai</artifactId>
+    <name>mall-ai</name>
+    <description>AI客服模块：Spring AI 集成通义千问，提供智能对话、Function Calling 工具调用</description>
+
+    <dependencies>
+        <!-- 公共模块：引入 mall-common 获得 Web/Security/MyBatis Plus 等基础能力 -->
+        <dependency>
+            <groupId>com.yking</groupId>
+            <artifactId>mall-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- Spring AI OpenAI Starter：兼容 OpenAI 协议的 AI 模型接入（此处连接通义千问 DashScope API） -->
+        <!-- 提供 ChatClient、ChatModel、Tool Calling 等核心能力 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-openai</artifactId>
+        </dependency>
+
+        <!-- Spring AI 向量存储（内存版）：用于 RAG 检索增强 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-vector-store</artifactId>
+            <version>${spring-ai.version}</version>
+        </dependency>
+
+        <!-- Spring AI Tika 文档读取器：用于解析 PDF 等文档 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-tika-document-reader</artifactId>
+            <version>${spring-ai.version}</version>
+        </dependency>
+
+        <!-- Spring AI 向量检索 advisor：提供 QuestionAnswerAdvisor，把检索到的片段注入 prompt -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-vector-store-advisor</artifactId>
+            <version>${spring-ai.version}</version>
+        </dependency>
+
+    </dependencies>
+</project>

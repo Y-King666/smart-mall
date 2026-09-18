@@ -1,0 +1,116 @@
+/**
+ * 登录 / 注册页共用版式
+ *
+ * 这两个页面刻意保持同一套版式（左品牌陈述、右表单卡片），
+ * 因此样式抽到这里共享，而不是在两个组件的 <style scoped> 里各写一份。
+ *
+ * 注意：不能把它放进 <style scoped> 里用 @import 引入——@import 的规则
+ * 不会被加上作用域属性，反而会变成全局样式。所以这里作为全局样式表引入，
+ * 并统一用 auth__ 前缀命名，避免与其他页面的类名冲突。
+ */
+
+.auth {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ==================== 品牌侧 ==================== */
+.auth__brand {
+  background: linear-gradient(160deg, var(--mp-canvas) 0%, var(--mp-surface-subdued) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mp-space-2xl);
+}
+
+.auth__brand-inner {
+  max-width: 360px;
+}
+
+.auth__logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: var(--mp-radius);
+}
+
+.auth__slogan {
+  margin-top: var(--mp-space-lg);
+  font-size: 34px;
+  line-height: 1.5;
+}
+
+.auth__sub {
+  margin-top: var(--mp-space-md);
+  color: var(--mp-ink-secondary);
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+
+/* ==================== 表单侧 ==================== */
+.auth__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mp-space-2xl) var(--mp-space-lg);
+  background: var(--mp-surface);
+}
+
+.auth__card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth__eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--mp-primary);
+}
+
+.auth__title {
+  margin-top: var(--mp-space-xs);
+  font-size: 30px;
+}
+
+.auth__hint {
+  margin-top: var(--mp-space-xs);
+  margin-bottom: var(--mp-space-lg);
+  font-size: 13px;
+  color: var(--mp-ink-secondary);
+}
+
+.auth__submit {
+  width: 100%;
+  height: 44px;
+  margin-top: var(--mp-space-xs);
+  font-size: 15px;
+}
+
+.auth__switch {
+  margin-top: var(--mp-space-md);
+  font-size: 13px;
+  color: var(--mp-ink-secondary);
+}
+
+.auth__link {
+  color: var(--mp-primary);
+  font-weight: 600;
+}
+
+.auth__link--muted {
+  color: var(--mp-ink-secondary);
+  font-weight: 400;
+}
+
+/* 窄屏收敛为单栏，隐藏品牌侧 */
+@media (max-width: 860px) {
+  .auth {
+    grid-template-columns: 1fr;
+  }
+
+  .auth__brand {
+    display: none;
+  }
+}
