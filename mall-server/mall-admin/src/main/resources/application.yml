@@ -1,0 +1,103 @@
+# ==================== 服务器配置 ====================
+server:
+  port: 8080  # 服务端口号
+
+# ==================== Spring 核心配置 ====================
+spring:
+  # 应用名：日志与监控用它标识服务
+  # 配在实际启动的模块里。原先误写在 mall-common 的 application.properties 中，
+  # 会把应用名报成 mall-common（库模块名），导致排查问题时认错服务。
+  application:
+    name: mall-admin
+
+  # -------------------- 文件上传配置 --------------------
+  servlet:
+    multipart:
+      # 单个文件大小上限，与前端商品封面上传组件的 5MB 校验保持一致
+      # 默认值为 1MB，不改会导致 1MB 以上的图片上传失败
+      max-file-size: 5MB
+      # 单次请求的总大小上限
+      max-request-size: 10MB
+
+  # -------------------- 数据源配置 --------------------
+  datasource:
+    # MySQL 连接 URL
+    # useUnicode=true: 使用 Unicode 编码
+    # characterEncoding=utf-8: 字符集为 UTF-8
+    # serverTimezone=Asia/Shanghai: 时区为上海
+    # allowPublicKeyRetrieval=true: 允许公钥检索（MySQL 8.0+ 需要）
+    # useSSL=false: 不使用 SSL 连接
+    url: jdbc:mysql://localhost:3306/mall_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    # 密码由环境变量提供，不写进仓库；本地启动需自行设置 DB_PASSWORD
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 8.x 驱动类
+
+  sql:
+    init:
+      mode: never  # 每次启动都执行初始化脚本，always 表示每次启动都执行，never 表示不执行
+      schema-locations: classpath:schema.sql  # 建表脚本位置
+      data-locations: classpath:data.sql  # 初始化数据脚本位置
+
+  # -------------------- Spring AI 配置 --------------------
+  ai:
+    openai:
+      # 通义千问 API Key（从环境变量 AI_API_KEY 读取，默认值为占位符）
+      # 获取地址: https://dashscope.console.aliyun.com/
+      api-key: ${AI_API_KEY:sk-placeholder}
+      # 通义千问兼容 OpenAI 协议的 API 地址（必须包含 /v1 后缀）
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      chat:
+        model: qwen3.7-flash
+        temperature: 0.5  # 数值越高越不准确
+      # 文本嵌入模型配置（用于 RAG 向量化）
+      embedding:
+        model: text-embedding-v4
+
+# ==================== MyBatis Plus 配置 ====================
+mybatis-plus:
+  configuration:
+    # 开启驼峰命名自动转换：数据库 user_name -> Java userName
+    map-underscore-to-camel-case: true
+    # SQL 日志实现：在控制台打印 SQL（开发环境用，生产环境建议关闭）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 逻辑删除字段名
+      logic-delete-field: deleted
+      # 已删除的值（1 表示已删除）
+      logic-delete-value: 1
+      # 未删除的值（0 表示未删除）
+      logic-not-delete-value: 0
+
+jwt:
+  # JWT 签名密钥（Base64 编码的 256 位随机密钥，用于 HMAC-SHA256 算法）
+  # 由环境变量提供，不写进仓库；本地启动需自行设置 JWT_SECRET
+  secret: ${JWT_SECRET}
+  # JWT 过期时间（毫秒为单位，1 天 = 86400000 毫秒）
+  expiration: 86400000
+
+# ==================== 文件上传配置 ====================
+# 上传文件的本地存储根目录，相对路径基于「服务启动时的工作目录」
+# 通过 /api/uploads/** 对外提供访问，映射规则见 WebMvcConfig
+#
+# ./uploads 要落在项目根目录，各启动方式的工作目录必须一致：
+# IDEA 的运行配置默认就是项目根；命令行启动由 mall-admin/pom.xml 中
+# spring-boot-maven-plugin 的 workingDirectory 固定到项目根。
+# 否则会各自生成一个 uploads 目录，出现「图传进去了却访问不到」。
+file:
+  upload-dir: ./uploads
+
+# ==================== RAG 知识库配置 ====================
+# 向量库持久化文件路径。
+# SimpleVectorStore 是内存版，不落盘则每次启动都要把整份 PDF 重新向量化一遍，
+# 持续消耗嵌入模型额度。落盘后启动直接读取，不再调用嵌入模型。
+# 文件旁会生成同名的 .sha256 指纹，PDF 内容变化时自动失效并重建。
+rag:
+  vector-store-path: ./data/vector-store.json
+
+# ==================== 数据分析服务配置 ====================
+# Python 数据分析服务（mall-analytics）地址
+# 管理端 /api/admin/analytics/** 接口会转发到该服务
+analytics:
+  base-url: http://localhost:8000

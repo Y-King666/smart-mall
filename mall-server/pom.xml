@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 使用springboot官方依赖生态包 starter parent -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <!-- 项目基本信息 -->
+    <groupId>com.yking</groupId>
+    <artifactId>spring-ai-mall</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging> <!-- 项目打包方式 -->
+    <name>spring-ai-mall</name>
+    <description>技术点springboot4.1.0+springai2.0</description>
+
+    <!-- ==================== 子模块声明 ==================== -->
+    <modules>
+        <module>mall-common</module>   <!-- 公共模块：实体、工具、配置 -->
+         <module>mall-ai</module>       <!-- AI客服模块：Spring AI 集成 -->
+         <module>mall-admin</module>    <!-- 统一后端服务：管理端 + 用户端（含AI客服） -->
+    </modules>
+
+    <!-- ==================== 版本属性集中管理 ==================== -->
+    <properties>
+        <java.version>17</java.version>                               <!-- Java 版本：JDK 17（Spring Boot 4.x 最低要求） -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  <!-- 告诉 Maven 用 UTF-8 来读取和编译 .java 源文件 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>  <!-- 告诉 Maven 生成的报告文件（如站点文档、测试报告等）使用 UTF-8 编码 -->
+        <mybatis-plus.version>3.5.16</mybatis-plus.version>            <!-- MyBatis Plus 版本（boot4-starter 需 3.5.15+） -->
+        <spring-ai.version>2.0.1</spring-ai.version>                  <!-- Spring AI 版本 -->
+        <jjwt.version>0.12.6</jjwt.version>                           <!-- JJWT（JWT令牌）版本 -->
+    </properties>
+
+    <!-- ==================== 依赖版本统一管理（子模块引用时不指定版本号） ==================== -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- MyBatis Plus：ORM 框架，增强 MyBatis 的 CRUD / 分页 / 逻辑删除能力 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- MyBatis Plus JSqlParser：分页插件所需的 SQL 解析器（3.5.9+ 需单独引入） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- Spring AI BOM：统一管理 Spring AI 所有模块的版本号 -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- JJWT API：JWT 令牌核心 API（生成/解析接口定义） -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- JJWT Impl：JWT 令牌运行时实现（签名/验证逻辑） -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- JJWT Jackson：JWT 令牌的 JSON 序列化/反序列化支持 -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- ==================== 构建插件 ==================== -->
+    <build>
+        <plugins>
+            <!-- Maven 编译插件：指定 Java 编译版本和源码编码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source><!-- 源码 Java 版本 -->
+                    <target>${java.version}</target><!-- 目标 Java 版本 -->
+                    <encoding>UTF-8</encoding><!-- 编译时的源码编码 -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- ====================
+    项目级额外仓库配置
+    告诉 Maven "除了默认的中央仓库（settings.xml 中的配置 — "全局仓库基础设施"）还要去这个仓库找依赖"
+    ==================== -->
+    <repositories>
+        <!-- Spring Milestones 仓库：获取 Spring 预发布/Milestone 版本依赖 -->
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>

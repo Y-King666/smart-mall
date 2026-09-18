@@ -1,0 +1,107 @@
+/**
+ * 设计令牌（Design Tokens）
+ *
+ * 数值取自用户端设计稿的设计规范「东方编辑式极简 / East Asian Editorial Minimalist」，
+ * 均按规范原文的精确值填写，请勿随意改动。
+ *
+ * 文件分两段：
+ *   1. 原始令牌：--mp-* 前缀，供自研样式使用
+ *   2. Element Plus 主题映射：把上面的令牌映射到 --el-* 变量，
+ *      使 Element Plus 组件（表单、分页、消息提示、弹窗、标签）自动呈现同一套观感
+ */
+
+:root {
+  /* ==================== 画布与容器 ==================== */
+  --mp-canvas: #faf7f2;         /* 宣纸暖白，页面底色 */
+  --mp-surface: #ffffff;        /* 卡片、浮层、激活态表面 */
+  --mp-surface-subdued: #f4efea;/* 输入框底、分组容器、禁用态 */
+
+  /* ==================== 品牌色 ==================== */
+  --mp-primary: #b83b26;        /* 朱砂陶土红：主操作、强调、品牌 */
+  --mp-primary-hover: #9e3220;  /* 主色悬停/按下 */
+  --mp-primary-deep: #962311;   /* 主色深态 */
+  --mp-secondary: #d4a373;      /* 暖琥珀金：徽章、次级强调 */
+  --mp-secondary-tint: rgba(212, 163, 115, 0.16); /* 琥珀浅底，用于标签 */
+  --mp-secondary-ink: #8f6438;  /* 琥珀底上的文字色 */
+  --mp-tertiary: #e07a5f;       /* 珊瑚陶：动态态、角标 */
+
+  /* ==================== 文字（墨色） ==================== */
+  --mp-ink: #1f2022;            /* 主文字、价格数字 */
+  --mp-ink-secondary: #686d76;  /* 副标题、元信息、面包屑 */
+  --mp-ink-muted: #a0a4a8;      /* 占位符、弱化图标、发丝分隔线 */
+
+  /* ==================== 描边与分隔 ==================== */
+  --mp-outline: rgba(31, 32, 34, 0.12); /* 次级按钮描边 */
+  --mp-separator: #efeae4;              /* 发丝分隔线 */
+
+  /* ==================== AI 入口专用 ==================== */
+  /* 规范为「AI 顾问」这一角色单独定义了渐变与光晕，用于悬浮入口等位置 */
+  --mp-ai-gradient: linear-gradient(135deg, #b83b26 0%, #f39c12 100%);
+  --mp-ai-halo: 0 0 24px 0 rgba(184, 59, 38, 0.22);
+
+  /* ==================== 圆角 ==================== */
+  --mp-radius-sm: 4px;
+  --mp-radius: 8px;             /* 输入框、标签、内部缩略图 */
+  --mp-radius-md: 12px;
+  --mp-radius-lg: 16px;         /* 商品卡、通知条 */
+  --mp-radius-xl: 24px;         /* 弹层、主视觉卡 */
+  --mp-radius-full: 9999px;     /* 胶囊：悬浮按钮、徽章 */
+
+  /* ==================== 阴影（规范刻意拒绝浓重投影） ==================== */
+  --mp-shadow-card: 0 4px 20px -2px rgba(31, 32, 34, 0.04);
+  --mp-shadow-overlay: 0 8px 30px -4px rgba(31, 32, 34, 0.08);
+
+  /* ==================== 字体 ==================== */
+  /* 标题用衬线体承载「编辑感」；正文/界面用无衬线体保证小字号可读性 */
+  --mp-font-serif: 'Noto Serif SC', 'Noto Serif', 'Songti SC', 'STSong', SimSun, Georgia, serif;
+  --mp-font-sans: Manrope, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+
+  /* ==================== 间距（8pt 栅格） ==================== */
+  --mp-space-2xs: 4px;
+  --mp-space-xs: 8px;
+  --mp-space-sm: 12px;
+  --mp-space-md: 16px;
+  --mp-space-lg: 24px;
+  --mp-space-xl: 32px;
+  --mp-space-2xl: 48px;
+
+  /* ==================== 布局 ==================== */
+  --mp-page-margin: 20px;       /* 页面左右外边距 */
+  --mp-content-width: 1280px;   /* 内容区最大宽度 */
+  --mp-header-height: 68px;
+
+  /* ==================== Element Plus 主题映射 ==================== */
+  --el-color-primary: var(--mp-primary);
+  /* 以下浅色/深色变体由主色与白色/黑色按 Element Plus 的混合比例推导 */
+  --el-color-primary-light-3: #cd7667;
+  --el-color-primary-light-5: #dc9d93;
+  --el-color-primary-light-7: #eac4be;
+  --el-color-primary-light-8: #f1d8d4;
+  --el-color-primary-light-9: #f8ebe9;
+  --el-color-primary-dark-2: #932f1e;
+
+  /* 仅按设计规范覆盖错误色；成功/警告/信息保留 Element Plus 默认值，
+     因为它们承载订单状态等语义（已支付/待支付），改色反而会削弱辨识 */
+  --el-color-error: #ba1a1a;
+  --el-color-danger: #ba1a1a;
+
+  --el-text-color-primary: var(--mp-ink);
+  --el-text-color-regular: var(--mp-ink-secondary);
+  --el-text-color-secondary: var(--mp-ink-muted);
+  --el-text-color-placeholder: var(--mp-ink-muted);
+
+  --el-border-color: var(--mp-outline);
+  --el-border-color-light: var(--mp-separator);
+  --el-border-color-lighter: var(--mp-separator);
+
+  --el-bg-color: var(--mp-surface);
+  --el-bg-color-page: var(--mp-canvas);
+  --el-fill-color-blank: var(--mp-surface);
+  --el-fill-color-light: var(--mp-surface-subdued);
+
+  --el-border-radius-base: var(--mp-radius);
+  --el-border-radius-small: var(--mp-radius-sm);
+  --el-border-radius-round: var(--mp-radius-full);
+
+  --el-font-family: var(--mp-font-sans);
+}
