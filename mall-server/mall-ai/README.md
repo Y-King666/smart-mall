@@ -62,7 +62,7 @@ data: {"type":"done","sessionId":"xxxx"}
 
 每次对话都会先用用户提问检索一次 PDF 知识库，把相似度达标的片段拼进 prompt：
 
-- 知识库来自 `mall-ai/src/main/resources/Consultation2025.pdf`，应用启动时由 `RagConfig` 读取、切分并向量化；
+- 知识库来自 `mall-ai/src/main/resources/website-knowledge.pdf`，应用启动时由 `RagConfig` 读取、切分并向量化；
 - 检索参数在 `RagConfig` 中：`topK = 4`、相似度阈值 `0.5`，低于阈值的片段不注入，避免无关内容干扰回答；
 - 向量库虽是内存版（`SimpleVectorStore`），但会**持久化到文件**（路径见 `rag.vector-store-path`，默认 `./data/vector-store.json`）：
   向量连同文本一起落盘，之后启动直接 `load`（纯反序列化，不调用嵌入模型），只在

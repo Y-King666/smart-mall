@@ -39,7 +39,7 @@ public class RagConfig {
      */
     private static final double SIMILARITY_THRESHOLD = 0.5;
 
-    @Value("classpath:Consultation2025.pdf")
+    @Value("classpath:website-knowledge.pdf")
     private Resource pdfResource;
 
     /**
@@ -69,7 +69,7 @@ public class RagConfig {
             // 但必须留下明确的告警，否则失败是静默的——向量库空着，
             // 问答退化成普通对话，从外部完全看不出异常。
             log.warn("知识库初始化失败，RAG 未生效，问答将退化为普通对话。"
-                    + "请检查 AI_API_KEY 是否已配置、Consultation2025.pdf 是否可读。", e);
+                    + "请检查 AI_API_KEY 是否已配置、website-knowledge.pdf 是否可读。", e);
         }
         return vectorStore;
     }
